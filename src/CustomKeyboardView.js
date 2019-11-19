@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Platform, requireNativeComponent} from 'react-native';
+import {
+  InteractionManager, Platform, requireNativeComponent
+} from 'react-native'
 import TextInputKeyboardManagerIOS from './TextInputKeyboardMangerIOS';
 import TextInputKeyboardManagerAndroid from './TextInputKeyboardManagerAndroid';
 import KeyboardRegistry from './KeyboardsRegistry';
@@ -84,10 +86,10 @@ export default class CustomKeyboardView extends Component {
       }
     }
 
-    if (IsIOS && TextInputKeyboardManagerIOS && inputRef && component !== this.props.component) {
-      if (component) {
+    if (IsIOS && TextInputKeyboardManagerIOS && inputRef) {
+      if (component && initialProps.reset) {
         TextInputKeyboardManagerIOS.setInputComponent(inputRef, {component, initialProps});
-      } else {
+      } else if (component !== this.props.component) {
         TextInputKeyboardManagerIOS.removeInputComponent(inputRef);
       }
     }
@@ -95,6 +97,7 @@ export default class CustomKeyboardView extends Component {
     if (onRequestShowKeyboard && !this.registeredRequestShowKeyboard) {
       this.registeredRequestShowKeyboard = true;
       KeyboardRegistry.addListener('onRequestShowKeyboard', (args) => {
+        console.log('onRequestShowKeyboard')
         onRequestShowKeyboard(args.keyboardId);
       });
     }
