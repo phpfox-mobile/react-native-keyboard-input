@@ -23,6 +23,7 @@ export default class KeyboardAccessoryView extends Component {
     manageScrollView: PropTypes.bool,
     requiresSameParentToManageScrollView: PropTypes.bool,
     addBottomView: PropTypes.bool,
+    bottomViewBgColor: PropTypes.string,
     allowHitsOutsideBounds: PropTypes.bool,
   };
   static defaultProps = {
@@ -31,6 +32,7 @@ export default class KeyboardAccessoryView extends Component {
     manageScrollView: true,
     requiresSameParentToManageScrollView: false,
     addBottomView: false,
+    bottomViewBgColor: 'white',
     allowHitsOutsideBounds: false,
   };
 
@@ -62,27 +64,12 @@ export default class KeyboardAccessoryView extends Component {
     }
   }
 
-  onAndroidBackPressed() {
-    if (this.props.kbComponent) {
-      KeyboardUtils.dismiss();
-      return true;
-    }
-    return false;
-  }
-
   getIOSTrackingScrollBehavior() {
     let scrollBehavior = this.props.iOSScrollBehavior;
     if (IsIOS && NativeModules.KeyboardTrackingViewManager && scrollBehavior === -1) {
       scrollBehavior = NativeModules.KeyboardTrackingViewManager.KeyboardTrackingScrollBehaviorFixedOffset;
     }
     return scrollBehavior;
-  }
-
-  async getNativeProps() {
-    if (this.trackingViewRef) {
-      return await this.trackingViewRef.getNativeProps();
-    }
-    return {};
   }
 
   registerForKeyboardResignedEvent() {
@@ -110,6 +97,14 @@ export default class KeyboardAccessoryView extends Component {
     }
   }
 
+  onAndroidBackPressed() {
+    if (this.props.kbComponent) {
+      KeyboardUtils.dismiss();
+      return true;
+    }
+    return false;
+  }
+
   processInitialProps() {
     if (IsIOS && this.props.kbInitialProps && this.props.kbInitialProps.backgroundColor) {
       const processedProps = Object.assign({}, this.props.kbInitialProps);
@@ -117,6 +112,13 @@ export default class KeyboardAccessoryView extends Component {
       return processedProps;
     }
     return this.props.kbInitialProps;
+  }
+
+  async getNativeProps() {
+    if (this.trackingViewRef) {
+      return await this.trackingViewRef.getNativeProps();
+    }
+    return {};
   }
 
   scrollToStart() {
@@ -136,6 +138,7 @@ export default class KeyboardAccessoryView extends Component {
         manageScrollView={this.props.manageScrollView}
         requiresSameParentToManageScrollView={this.props.requiresSameParentToManageScrollView}
         addBottomView={this.props.addBottomView}
+        bottomViewBgColor={this.props.bottomViewBgColor}
         allowHitsOutsideBounds={this.props.allowHitsOutsideBounds}
       >
         {this.props.renderContent && this.props.renderContent()}
