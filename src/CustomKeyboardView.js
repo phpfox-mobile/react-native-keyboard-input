@@ -97,7 +97,6 @@ export default class CustomKeyboardView extends Component {
     if (onRequestShowKeyboard && !this.registeredRequestShowKeyboard) {
       this.registeredRequestShowKeyboard = true;
       KeyboardRegistry.addListener('onRequestShowKeyboard', (args) => {
-        console.log('onRequestShowKeyboard')
         onRequestShowKeyboard(args.keyboardId);
       });
     }
@@ -118,7 +117,13 @@ export default class CustomKeyboardView extends Component {
   render() {
     if (IsAndroid) {
       const {component, initialProps} = this.props;
+
+      if (!component) {
+        return null;
+      }
+
       const KeyboardComponent = component && KeyboardRegistry.getKeyboard(component);
+
       return (
         <CustomKeyboardViewNativeAndroid>
           {KeyboardComponent && <KeyboardComponent {...initialProps}/>}
