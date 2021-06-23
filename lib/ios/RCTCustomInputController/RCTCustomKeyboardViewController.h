@@ -19,5 +19,7 @@
 
 @property (nonatomic, strong) NSLayoutConstraint *heightConstraint;
 @property (nonatomic, strong) RCTRootView *rootView;
+@property (nonatomic, strong) UIView *bottomView;
+@property (nonatomic, strong) UIColor *bottomViewBgColor;
 
 @end

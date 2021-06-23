@@ -137,6 +137,14 @@ RCT_EXPORT_METHOD(presentCustomInputComponent:(nonnull NSNumber*)inputFieldTag p
     self.customInputComponentPresented = NO;
     
     RCTCustomKeyboardViewController* customKeyboardController = [[RCTCustomKeyboardViewController alloc] init];
+    if(initialProps != nil && initialProps[@"bottomViewBgColor"] != nil)
+    {
+        UIColor *bottomViewBgColor = [RCTConvert UIColor:initialProps[@"bottomViewBgColor"]];
+        if(bottomViewBgColor != nil)
+        {
+          customKeyboardController.bottomViewBgColor = bottomViewBgColor;
+        }
+    }
     customKeyboardController.rootView = rv;
     
     _WXInputHelperView* helperView = [[_WXInputHelperView alloc] initWithFrame:CGRectZero];

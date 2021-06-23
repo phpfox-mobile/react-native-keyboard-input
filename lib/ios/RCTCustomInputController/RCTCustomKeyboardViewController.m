@@ -59,6 +59,11 @@
         [_rootView removeFromSuperview];
     }
     
+    if(_bottomView != nil)
+    {
+        [_bottomView removeFromSuperview];
+    }
+
     _rootView = rootView;
     _rootView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.inputView addSubview:_rootView];
@@ -71,6 +76,14 @@
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_10_3
     if (@available(iOS 11.0, *)) {
         yAxisAnchor = self.view.safeAreaLayoutGuide.bottomAnchor;
+        _bottomView = [UIView new];
+        _bottomView.translatesAutoresizingMaskIntoConstraints = NO;
+        _bottomView.backgroundColor = _bottomViewBgColor;
+        [self.inputView addSubview:_bottomView];
+        [_bottomView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
+        [_bottomView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
+        [_bottomView.topAnchor constraintEqualToAnchor:yAxisAnchor].active = YES;
+        [_bottomView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
     }
 #endif
     [_rootView.bottomAnchor constraintEqualToAnchor:yAxisAnchor].active = YES;

@@ -106,12 +106,22 @@ export default class KeyboardAccessoryView extends Component {
   }
 
   processInitialProps() {
-    if (IsIOS && this.props.kbInitialProps && this.props.kbInitialProps.backgroundColor) {
-      const processedProps = Object.assign({}, this.props.kbInitialProps);
-      processedProps.backgroundColor = processColor(processedProps.backgroundColor);
-      return processedProps;
+    const { kbInitialProps, bottomViewBgColor } = this.props
+    if (IsIOS && kbInitialProps) {
+      const { backgroundColor } = kbInitialProps
+      if (backgroundColor || bottomViewBgColor) {
+        const processedProps = Object.assign({}, kbInitialProps);
+        if (backgroundColor) {
+          processedProps.backgroundColor = processColor(backgroundColor);
+        }
+        if (bottomViewBgColor) {
+          processedProps.bottomViewBgColor = processColor(bottomViewBgColor);
+        }
+        return processedProps;
+      }
+      return kbInitialProps
     }
-    return this.props.kbInitialProps;
+    return kbInitialProps;
   }
 
   async getNativeProps() {
