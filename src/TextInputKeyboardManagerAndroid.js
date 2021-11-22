@@ -9,4 +9,8 @@ export default class TextInputKeyboardManagerAndroid {
     CustomKeyboardInput.clearFocusedView();
     await TextInputKeyboardManagerAndroid.reset();
   };
+
+  static setUseSafeArea =(useSafeArea)=>{
+    CustomKeyboardInput.setUseSafeArea(useSafeArea)
+  }
 }

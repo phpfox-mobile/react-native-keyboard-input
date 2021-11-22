@@ -17,12 +17,18 @@ public class ReactSoftKeyboardMonitor implements ReactScreenMonitor.Listener {
     public interface Listener {
         void onSoftKeyboardVisible(boolean distinct);
         void onSoftKeyboardHidden();
+        boolean isUseSafeArea();
     }
 
     private final ViewTreeObserver.OnGlobalLayoutListener mInnerLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
         @Override
         public void onGlobalLayout() {
             Integer viewportVisibleHeight = getViewportVisibleHeight();
+
+            if(mExternalListener.isUseSafeArea()){
+                viewportVisibleHeight = viewportVisibleHeight + getStatusBarHeight();
+            }
+
             if (viewportVisibleHeight.equals(mLastViewportVisibleHeight)) {
                 return;
             }
@@ -140,6 +146,21 @@ public class ReactSoftKeyboardMonitor implements ReactScreenMonitor.Listener {
         final Rect visibleArea = new Rect();
         getWindow().getDecorView().getWindowVisibleDisplayFrame(visibleArea);
         return visibleArea.height();
+    }
+
+    public int getStatusBarHeight() {
+        Integer statusBarHeight = null;
+        final Rect visibleArea = new Rect();
+        Window window = getWindow();
+
+        if (window != null) {
+            window.getDecorView().getWindowVisibleDisplayFrame(visibleArea);
+            int contentViewTop = window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
+            statusBarHeight = visibleArea.top;
+        }
+
+        return statusBarHeight;
+
     }
 
     private Integer getLocallyVisibleHeight() {
