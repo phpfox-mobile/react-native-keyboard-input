@@ -10,7 +10,7 @@ export default class TextInputKeyboardManagerAndroid {
     await TextInputKeyboardManagerAndroid.reset();
   };
 
-  static setUseSafeArea =(useSafeArea)=>{
+  static setUseSafeArea = (useSafeArea) => {
     CustomKeyboardInput.setUseSafeArea(useSafeArea)
   }
 }
