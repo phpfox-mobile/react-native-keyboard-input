@@ -37,6 +37,10 @@ export default class CustomKeyboardView extends Component {
       this.registeredRequestShowKeyboard = false;
     }
 
+    if( IsAndroid && TextInputKeyboardManagerAndroid ){
+      TextInputKeyboardManagerAndroid.setUseSafeArea(useSafeArea)
+    }
+
     this.keyboardExpandedToggle = {};
     if (IsIOS && TextInputKeyboardManagerIOS) {
       KeyboardRegistry.addListener('onToggleExpandedKeyboard', (args) => {
@@ -78,11 +82,15 @@ export default class CustomKeyboardView extends Component {
   }
 
   async UNSAFE_componentWillReceiveProps(nextProps) { //eslint-disable-line
-    const {inputRef, component, initialProps, onRequestShowKeyboard} = nextProps;
+    const {inputRef, component, initialProps, onRequestShowKeyboard, useSafeArea} = nextProps;
 
     if (IsAndroid) {
       if (this.props.component !== component && !component) {
         await TextInputKeyboardManagerAndroid.reset();
+      }
+
+      if(TextInputKeyboardManagerAndroid && this.props.useSafeArea !== useSafeArea ){
+        TextInputKeyboardManagerAndroid.setUseSafeArea(useSafeArea)
       }
     }
 

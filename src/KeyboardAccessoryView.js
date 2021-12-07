@@ -25,6 +25,7 @@ export default class KeyboardAccessoryView extends Component {
     addBottomView: PropTypes.bool,
     bottomViewBgColor: PropTypes.string,
     allowHitsOutsideBounds: PropTypes.bool,
+    useSafeArea: PropTypes.bool,
   };
   static defaultProps = {
     iOSScrollBehavior: -1,
@@ -34,6 +35,7 @@ export default class KeyboardAccessoryView extends Component {
     addBottomView: false,
     bottomViewBgColor: 'white',
     allowHitsOutsideBounds: false,
+    useSafeArea: false
   };
 
   constructor(props) {
@@ -158,6 +160,7 @@ export default class KeyboardAccessoryView extends Component {
           initialProps={this.processInitialProps()}
           onItemSelected={this.props.onItemSelected}
           onRequestShowKeyboard={this.props.onRequestShowKeyboard}
+          useSafeArea={this.props.useSafeArea}
         />
       </KeyboardTrackingView>
     );

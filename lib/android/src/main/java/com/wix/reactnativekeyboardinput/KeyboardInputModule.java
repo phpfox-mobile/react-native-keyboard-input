@@ -23,6 +23,11 @@ public class KeyboardInputModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void setUseSafeArea(Boolean useSafeArea) {
+        mLayout.setUseSafeArea(useSafeArea);
+    }
+
+    @ReactMethod
     public void reset(Promise promise) {
         mLayout.forceReset(promise);
     }
