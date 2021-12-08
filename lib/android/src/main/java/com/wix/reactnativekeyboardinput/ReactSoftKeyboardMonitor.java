@@ -151,13 +151,8 @@ public class ReactSoftKeyboardMonitor implements ReactScreenMonitor.Listener {
     public int getStatusBarHeight() {
         Integer statusBarHeight = null;
         final Rect visibleArea = new Rect();
-        Window window = getWindow();
-
-        if (window != null) {
-            window.getDecorView().getWindowVisibleDisplayFrame(visibleArea);
-            int contentViewTop = window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
-            statusBarHeight = visibleArea.top;
-        }
+        getWindow().getDecorView().getWindowVisibleDisplayFrame(visibleArea);
+        statusBarHeight = visibleArea.top;
 
         return statusBarHeight;
 

@@ -26,7 +26,7 @@ export default class CustomKeyboardView extends Component {
   constructor(props) {
     super(props);
 
-    const {inputRef, component, initialProps, onItemSelected} = props;
+    const {inputRef, component, initialProps, onItemSelected, useSafeArea} = props;
     if (component) {
       this.addOnItemSelectListener(onItemSelected, component);
 
